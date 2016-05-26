@@ -13,7 +13,7 @@ namespace RobotToDashboard
         //Parses XML to C# class
         public Parser()
         {
-
+            Console.WriteLine("test");
         }
 
         void parseRobotXML()
