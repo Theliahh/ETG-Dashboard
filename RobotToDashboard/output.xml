@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20160526 13:21:29.295" generator="Robot 2.9.2 (Python 2.7.11 on win32)">
+<suite source="C:\Users\VMDW73\Desktop\adb test\Tests" id="s1" name="Tests">
+<suite source="C:\Users\VMDW73\Desktop\adb test\Tests\ADB_Test.robot" id="s1-s1" name="ADB Test">
+<test id="s1-s1-t1" name="Test 1 Enable Airplane Mode On The Device">
+<kw name="Enable Airplane Mode On The Target Device" library="ADB_Test_Res">
+<kw name="Get Airplane Mode Status On The Device" library="General_ADB">
+<doc>Retrieves the airplane mode status which can be of the following values: AIRPLANE_MODE_INACTIVE: 0, AIRPLANE_MODE_ACTIVE: 1.</doc>
+<assign>
+<var>${airplane_mode_status}</var>
+</assign>
+<kw name="Adb Get Airplane Mode Status" library="General_ADB">
+<doc>Retrieves the airplane mode status which can be of the following values: AIRPLANE_MODE_INACTIVE: 0, AIRPLANE_MODE_ACTIVE: 1.</doc>
+<assign>
+<var>${output}</var>
+</assign>
+<msg timestamp="20160526 13:21:50.119" level="INFO">2016/05/26 13:21:49: INFO:	adb shell command executed: "C:\Users\VMDW73\AppData\Local\Android\sdk\platform-tools\adb.exe" -s 160895225E0096 shell settings get global airplane_mode_on</msg>
+<msg timestamp="20160526 13:21:50.119" level="INFO">${output} = 1</msg>
+<status status="PASS" endtime="20160526 13:21:50.120" starttime="20160526 13:21:49.309"></status>
+</kw>
+<msg timestamp="20160526 13:21:50.120" level="INFO">${airplane_mode_status} = 1</msg>
+<status status="PASS" endtime="20160526 13:21:50.121" starttime="20160526 13:21:49.309"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>${airplane_mode_status} == ${AIRPLANE_MODE_INACTIVE}</arg>
+<arg>Enable Airplane Mode On The Device</arg>
+</arguments>
+<status status="PASS" endtime="20160526 13:21:50.126" starttime="20160526 13:21:50.121"></status>
+</kw>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>Verify Airplane Is Enabled</arg>
+</arguments>
+<kw name="Verify Airplane Is Enabled" library="ADB_Tests">
+<kw name="Open Settings" library="Mobile">
+<doc>Opens any particular setting from android setting app</doc>
+<arguments>
+<arg>More</arg>
+</arguments>
+<status status="PASS" endtime="20160526 13:22:01.914" starttime="20160526 13:21:50.127"></status>
+</kw>
+<kw name="Get Object" library="Mobile">
+<doc>Get the UI object with selectors *selectors*</doc>
+<arguments>
+<arg>text=Airplane mode</arg>
+</arguments>
+<assign>
+<var>${airplane_mode}</var>
+</assign>
+<msg timestamp="20160526 13:22:01.914" level="INFO">${airplane_mode} = &lt;uiautomator.AutomatorDeviceObject object at 0x044414B0&gt;</msg>
+<status status="PASS" endtime="20160526 13:22:01.914" starttime="20160526 13:22:01.914"></status>
+</kw>
+<kw name="Get Object" library="Mobile">
+<doc>Get the UI object with selectors *selectors*</doc>
+<arguments>
+<arg>className=android.widget.Switch</arg>
+<arg>index=0</arg>
+</arguments>
+<assign>
+<var>${airplane_switch}</var>
+</assign>
+<msg timestamp="20160526 13:22:01.914" level="INFO">${airplane_switch} = &lt;uiautomator.AutomatorDeviceObject object at 0x0448E8B0&gt;</msg>
+<status status="PASS" endtime="20160526 13:22:01.914" starttime="20160526 13:22:01.914"></status>
+</kw>
+<kw name="Get Info Of Object" library="Mobile">
+<doc>return info dictionary of the *obj*</doc>
+<arguments>
+<arg>${airplane_switch}</arg>
+</arguments>
+<assign>
+<var>${switch_info}</var>
+</assign>
+<msg timestamp="20160526 13:22:02.779" level="INFO">${switch_info} = {u'contentDescription': u'', u'checked': True, u'scrollable': False, u'text': u'ON', u'packageName': u'com.android.settings', u'selected': False, u'enabled': True, u'bounds': {u'top': 186, u'left': 59...</msg>
+<status status="PASS" endtime="20160526 13:22:02.779" starttime="20160526 13:22:01.914"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>${switch_info['checked']}</arg>
+</arguments>
+<status status="PASS" endtime="20160526 13:22:02.779" starttime="20160526 13:22:02.779"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${switch_info}</arg>
+</arguments>
+<status status="PASS" endtime="20160526 13:22:02.795" starttime="20160526 13:22:02.795"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:02.795" starttime="20160526 13:21:50.126"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:02.795" starttime="20160526 13:21:50.126"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:02.795" starttime="20160526 13:21:49.309"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:02.795" critical="yes" starttime="20160526 13:21:49.309"></status>
+</test>
+<test id="s1-s1-t2" name="Test 4 Save Screen Shot On Device">
+<kw name="Save Screen On The Target Device" library="ADB_Test_Res">
+<doc>This demonstates the flexibility to call different keywords based on OS platform, while keeping the</doc>
+<kw name="Get OS Version Of Device" library="General_ADB">
+<doc>Returns the OS of the device via get-prop ro.build.version.release, ie Android 4.4,5.0,6.0.</doc>
+<assign>
+<var>${device_os}</var>
+</assign>
+<kw name="Adb Get Os Version Via Getprop" library="General_ADB">
+<doc>Get the Android OS build version via getprop ie Android 4.0,4.4,5.0,6.0.</doc>
+<assign>
+<var>${output}</var>
+</assign>
+<msg timestamp="20160526 13:22:02.998" level="INFO">2016/05/26 13:22:02: INFO:	adb shell command executed: "C:\Users\VMDW73\AppData\Local\Android\sdk\platform-tools\adb.exe" -s 160895225E0096 shell getprop ro.build.version.release</msg>
+<msg timestamp="20160526 13:22:02.998" level="INFO">${output} = 6.0.1</msg>
+<status status="PASS" endtime="20160526 13:22:02.998" starttime="20160526 13:22:02.810"></status>
+</kw>
+<msg timestamp="20160526 13:22:02.998" level="INFO">${device_os} = 6.0.1</msg>
+<status status="PASS" endtime="20160526 13:22:02.998" starttime="20160526 13:22:02.795"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'6.0' in "${device_os}"</arg>
+<arg>Save The Current Screen Of Device</arg>
+<arg>${remote_filename}</arg>
+<arg>${local_filename}</arg>
+<arg>ELSE</arg>
+<arg>Press Home Key On Device</arg>
+</arguments>
+<kw name="Save The Current Screen Of Device" library="General_ADB">
+<doc>Saves a screen shot of the remote device and transfers to local host PC then deletes file from device.</doc>
+<arguments>
+<arg>${remote_filename}</arg>
+<arg>${local_filename}</arg>
+</arguments>
+<kw name="Adb Save Screen" library="General_ADB">
+<doc>Saves a screen shot of the remote device and transfer to host PC then deletes file from device.</doc>
+<arguments>
+<arg>${remote_filename}</arg>
+<arg>${local_filename}</arg>
+<arg>${save_as_png}</arg>
+<arg>${display_id}</arg>
+</arguments>
+<assign>
+<var>${output}</var>
+</assign>
+<msg timestamp="20160526 13:22:04.573" level="INFO">2016/05/26 13:22:03: INFO:	adb shell command executed: "C:\Users\VMDW73\AppData\Local\Android\sdk\platform-tools\adb.exe" -s 160895225E0096 shell screencap -p /mnt/sdcard/ScreehShot.png
+
+2016/05/26 13:22:04: INFO:	adb command executed: "C:\Users\VMDW73\AppData\Local\Android\sdk\platform-tools\adb.exe" -s 160895225E0096 pull "/mnt/sdcard/ScreehShot.png" "ScreenShot.png"
+
+2016/05/26 13:22:04: INFO:	adb shell command executed: "C:\Users\VMDW73\AppData\Local\Android\sdk\platform-tools\adb.exe" -s 160895225E0096 shell rm -f  "/mnt/sdcard/ScreehShot.png"</msg>
+<msg timestamp="20160526 13:22:04.573" level="INFO">${output} = </msg>
+<status status="PASS" endtime="20160526 13:22:04.573" starttime="20160526 13:22:02.998"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:04.573" starttime="20160526 13:22:02.998"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:04.573" starttime="20160526 13:22:02.998"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:04.573" starttime="20160526 13:22:02.795"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:04.573" critical="yes" starttime="20160526 13:22:02.795"></status>
+</test>
+<test id="s1-s1-t3" name="Test 6 Open Wifi Settings">
+<kw name="Open Wifi Settings On The Target Device" library="ADB_Test_Res">
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>Open Settings To Wifi</arg>
+</arguments>
+<kw name="Open Settings To Wifi" library="ADB_Tests">
+<doc>Opens the settings menu and accesses Wireless settings</doc>
+<kw name="Open Settings" library="Mobile">
+<doc>Opens any particular setting from android setting app</doc>
+<arguments>
+<arg>WLAN</arg>
+</arguments>
+<status status="PASS" endtime="20160526 13:22:11.030" starttime="20160526 13:22:04.589"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:11.030" starttime="20160526 13:22:04.589"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:11.030" starttime="20160526 13:22:04.589"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:11.030" starttime="20160526 13:22:04.589"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:11.030" critical="yes" starttime="20160526 13:22:04.573"></status>
+</test>
+<test id="s1-s1-t4" name="Test 7 Enable Wifi On The Device">
+<kw name="Enable Wifi On The Target Device" library="ADB_Test_Res">
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>Open Settings To Wifi</arg>
+</arguments>
+<kw name="Open Settings To Wifi" library="ADB_Tests">
+<doc>Opens the settings menu and accesses Wireless settings</doc>
+<kw name="Open Settings" library="Mobile">
+<doc>Opens any particular setting from android setting app</doc>
+<arguments>
+<arg>WLAN</arg>
+</arguments>
+<status status="PASS" endtime="20160526 13:22:17.523" starttime="20160526 13:22:11.030"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:17.523" starttime="20160526 13:22:11.030"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:17.523" starttime="20160526 13:22:11.030"></status>
+</kw>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>Enable Wifi</arg>
+</arguments>
+<kw name="Enable Wifi" library="ADB_Tests">
+<kw name="Get Object" library="Mobile">
+<doc>Get the UI object with selectors *selectors*</doc>
+<arguments>
+<arg>checkable=true</arg>
+<arg>checked=false</arg>
+</arguments>
+<assign>
+<var>${wifi_toggle}</var>
+</assign>
+<msg timestamp="20160526 13:22:17.538" level="INFO">${wifi_toggle} = &lt;uiautomator.AutomatorDeviceObject object at 0x0448E030&gt;</msg>
+<status status="PASS" endtime="20160526 13:22:17.538" starttime="20160526 13:22:17.538"></status>
+</kw>
+<kw name="Click On Object" library="Mobile">
+<doc>Click on the UI object which is gained by `Get Object`.</doc>
+<arguments>
+<arg>${wifi_toggle}</arg>
+</arguments>
+<status status="PASS" endtime="20160526 13:22:18.287" starttime="20160526 13:22:17.538"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:18.287" starttime="20160526 13:22:17.538"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:18.287" starttime="20160526 13:22:17.538"></status>
+</kw>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>Verify Wifi Is Enabled</arg>
+</arguments>
+<kw name="Verify Wifi Is Enabled">
+<doc>*Creating keyword failed:* No keyword with name 'Verify Wifi Is Enabled' found.</doc>
+<msg timestamp="20160526 13:22:18.334" level="FAIL">No keyword with name 'Verify Wifi Is Enabled' found.</msg>
+<status status="FAIL" endtime="20160526 13:22:18.334" starttime="20160526 13:22:18.318"></status>
+</kw>
+<status status="FAIL" endtime="20160526 13:22:18.334" starttime="20160526 13:22:18.287"></status>
+</kw>
+<status status="FAIL" endtime="20160526 13:22:18.334" starttime="20160526 13:22:11.030"></status>
+</kw>
+<status status="FAIL" endtime="20160526 13:22:18.334" critical="yes" starttime="20160526 13:22:11.030">No keyword with name 'Verify Wifi Is Enabled' found.</status>
+</test>
+<test id="s1-s1-t5" name="Test 8 Disable Wifi On The Device">
+<kw name="Disable Wifi On The Target Device" library="ADB_Test_Res">
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>Open Settings To Wifi</arg>
+</arguments>
+<kw name="Open Settings To Wifi" library="ADB_Tests">
+<doc>Opens the settings menu and accesses Wireless settings</doc>
+<kw name="Open Settings" library="Mobile">
+<doc>Opens any particular setting from android setting app</doc>
+<arguments>
+<arg>WLAN</arg>
+</arguments>
+<status status="PASS" endtime="20160526 13:22:24.785" starttime="20160526 13:22:18.334"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:24.785" starttime="20160526 13:22:18.334"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:22:24.801" starttime="20160526 13:22:18.334"></status>
+</kw>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>Disable Wifi</arg>
+</arguments>
+<kw name="Disable Wifi" library="ADB_Tests">
+<kw name="Get Object" library="Mobile">
+<doc>Get the UI object with selectors *selectors*</doc>
+<arguments>
+<arg>checkable=true</arg>
+<arg>checked=true</arg>
+</arguments>
+<assign>
+<var>${wifi_toggle}</var>
+</assign>
+<msg timestamp="20160526 13:22:24.801" level="INFO">${wifi_toggle} = &lt;uiautomator.AutomatorDeviceObject object at 0x0449B490&gt;</msg>
+<status status="PASS" endtime="20160526 13:22:24.801" starttime="20160526 13:22:24.801"></status>
+</kw>
+<kw name="Click On Object" library="Mobile">
+<doc>Click on the UI object which is gained by `Get Object`.</doc>
+<arguments>
+<arg>${wifi_toggle}</arg>
+</arguments>
+<msg timestamp="20160526 13:22:48.041" level="FAIL">JsonRPCError: JsonRPC Error code: -32002, Message: com.android.uiautomator.core.UiObjectNotFoundException: UiSelector[CHECKED=true, CHECKABLE=true]</msg>
+<status status="FAIL" endtime="20160526 13:22:48.041" starttime="20160526 13:22:24.801"></status>
+</kw>
+<status status="FAIL" endtime="20160526 13:22:48.042" starttime="20160526 13:22:24.801"></status>
+</kw>
+<status status="FAIL" endtime="20160526 13:22:48.042" starttime="20160526 13:22:24.801"></status>
+</kw>
+<status status="FAIL" endtime="20160526 13:22:48.042" starttime="20160526 13:22:18.334"></status>
+</kw>
+<status status="FAIL" endtime="20160526 13:22:48.043" critical="yes" starttime="20160526 13:22:18.334">JsonRPCError: JsonRPC Error code: -32002, Message: com.android.uiautomator.core.UiObjectNotFoundException: UiSelector[CHECKED=true, CHECKABLE=true]</status>
+</test>
+<test id="s1-s1-t6" name="Test 9 Confirm Battery Has Serial Number">
+<kw name="Check For Battery Serial Number" library="ADB_Test_Res">
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>Open Settings To Battery Management</arg>
+</arguments>
+<kw name="Open Settings To Battery Management" library="ADB_Tests">
+<doc>Opens settings menu and navigates to Battery management</doc>
+<kw name="Open Settings" library="Mobile">
+<doc>Opens any particular setting from android setting app</doc>
+<arguments>
+<arg>${SETTINGS_TYPE}</arg>
+</arguments>
+<status status="PASS" endtime="20160526 13:23:01.316" starttime="20160526 13:22:48.049"></status>
+</kw>
+<kw name="Get Object" library="Mobile">
+<doc>Get the UI object with selectors *selectors*</doc>
+<arguments>
+<arg>text=Battery Information</arg>
+</arguments>
+<assign>
+<var>${battery_management}</var>
+</assign>
+<msg timestamp="20160526 13:23:01.316" level="INFO">${battery_management} = &lt;uiautomator.AutomatorDeviceObject object at 0x0449BD30&gt;</msg>
+<status status="PASS" endtime="20160526 13:23:01.316" starttime="20160526 13:23:01.316"></status>
+</kw>
+<kw name="Click On Object" library="Mobile">
+<doc>Click on the UI object which is gained by `Get Object`.</doc>
+<arguments>
+<arg>${battery_management}</arg>
+</arguments>
+<status status="PASS" endtime="20160526 13:23:02.140" starttime="20160526 13:23:01.316"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:23:02.140" starttime="20160526 13:22:48.048"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:23:02.140" starttime="20160526 13:22:48.048"></status>
+</kw>
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>Check If Serial Number Is Not Empty</arg>
+</arguments>
+<kw name="Check If Serial Number Is Not Empty" library="ADB_Tests">
+<kw name="Scroll To Object Vertically" library="Mobile">
+<doc>scroll forward vertically until specific ui object appears</doc>
+<arguments>
+<arg>text=Battery Serial Number</arg>
+</arguments>
+<status status="PASS" endtime="20160526 13:23:06.721" starttime="20160526 13:23:02.140"></status>
+</kw>
+<kw name="Get Object" library="Mobile">
+<doc>Get the UI object with selectors *selectors*</doc>
+<arguments>
+<arg>text=Battery Serial Number</arg>
+</arguments>
+<assign>
+<var>${battery_text}</var>
+</assign>
+<msg timestamp="20160526 13:23:06.721" level="INFO">${battery_text} = &lt;uiautomator.AutomatorDeviceObject object at 0x044F4930&gt;</msg>
+<status status="PASS" endtime="20160526 13:23:06.721" starttime="20160526 13:23:06.721"></status>
+</kw>
+<kw name="Get Sibling" library="Mobile">
+<doc>Get the sibling or child of sibling UI object from the *object* with *selectors*</doc>
+<arguments>
+<arg>${battery_text}</arg>
+<arg>className=android.widget.TextView</arg>
+<arg>index=1</arg>
+</arguments>
+<assign>
+<var>${serial_object}</var>
+</assign>
+<msg timestamp="20160526 13:23:06.721" level="INFO">${serial_object} = &lt;uiautomator.AutomatorDeviceObject object at 0x044F4FD0&gt;</msg>
+<status status="PASS" endtime="20160526 13:23:06.721" starttime="20160526 13:23:06.721"></status>
+</kw>
+<kw name="Get Object Text" library="Mobile">
+<doc>Gets the *object* text value which could be selected by *Get Object* or *Get Child*</doc>
+<arguments>
+<arg>${serial_object}</arg>
+</arguments>
+<assign>
+<var>${serial_number}</var>
+</assign>
+<msg timestamp="20160526 13:23:07.248" level="INFO">${serial_number} = F0689</msg>
+<status status="PASS" endtime="20160526 13:23:07.248" starttime="20160526 13:23:06.721"></status>
+</kw>
+<kw name="Should Not Be Empty" library="BuiltIn">
+<doc>Verifies that the given item is not empty.</doc>
+<arguments>
+<arg>${serial_number}</arg>
+</arguments>
+<msg timestamp="20160526 13:23:07.248" level="INFO">Length is 5</msg>
+<status status="PASS" endtime="20160526 13:23:07.248" starttime="20160526 13:23:07.248"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${serial_number}</arg>
+</arguments>
+<status status="PASS" endtime="20160526 13:23:07.248" starttime="20160526 13:23:07.248"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:23:07.248" starttime="20160526 13:23:02.140"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:23:07.248" starttime="20160526 13:23:02.140"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:23:07.248" starttime="20160526 13:22:48.047"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:23:07.248" critical="yes" starttime="20160526 13:22:48.045"></status>
+</test>
+<test id="s1-s1-t7" name="Test 10 Take a Picture With The Camera">
+<kw name="Take a Picture Using Device Camera" library="ADB_Test_Res">
+<kw name="Run Keyword" library="BuiltIn">
+<doc>Executes the given keyword with the given arguments.</doc>
+<arguments>
+<arg>Open Camera And Take Picture</arg>
+</arguments>
+<kw name="Open Camera And Take Picture" library="ADB_Tests">
+<kw name="Execute Adb Shell Command" library="Mobile">
+<doc>Execute adb shell *cmd*</doc>
+<arguments>
+<arg>rm storage/emulated/0/DCIM/Camera/*.jpg</arg>
+</arguments>
+<status status="PASS" endtime="20160526 13:23:08.104" starttime="20160526 13:23:07.264"></status>
+</kw>
+<kw name="Launch App" library="Mobile">
+<doc>Launches app from android app launcher page</doc>
+<arguments>
+<arg>Snapdragon Camera</arg>
+</arguments>
+<status status="PASS" endtime="20160526 13:23:11.775" starttime="20160526 13:23:08.104"></status>
+</kw>
+<kw name="Press Camera" library="Mobile">
+<doc>Press camera key.</doc>
+<status status="PASS" endtime="20160526 13:23:12.633" starttime="20160526 13:23:11.775"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3</arg>
+</arguments>
+<msg timestamp="20160526 13:23:15.634" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" endtime="20160526 13:23:15.635" starttime="20160526 13:23:12.634"></status>
+</kw>
+<kw name="Pull File From Device" library="General_ADB">
+<doc>Pulls a file from the remote Android device to the local host PC and returns any available output.</doc>
+<arguments>
+<arg>storage/emulated/0/DCIM/Camera/</arg>
+<arg>CameraTest</arg>
+</arguments>
+<assign>
+<var>${result}</var>
+</assign>
+<kw name="Adb Pull" library="General_ADB">
+<doc>Copies a remote file from remote device to the host PC.</doc>
+<arguments>
+<arg>${remote}</arg>
+<arg>${local}</arg>
+</arguments>
+<assign>
+<var>${output}</var>
+</assign>
+<msg timestamp="20160526 13:23:17.400" level="INFO">2016/05/26 13:23:15: INFO:	adb command executed: "C:\Users\VMDW73\AppData\Local\Android\sdk\platform-tools\adb.exe" -s 160895225E0096 pull "storage/emulated/0/DCIM/Camera/" "CameraTest"</msg>
+<msg timestamp="20160526 13:23:17.400" level="INFO">${output} = pull: building file list...
+pull: storage/emulated/0/DCIM/Camera/IMG_19700107_023846.jpg -&gt; CameraTest/IMG_19700107_023846.jpg
+1 file pulled. 0 files skipped.
+2607 KB/s (3962179 bytes in 1.483s)
+</msg>
+<status status="PASS" endtime="20160526 13:23:17.400" starttime="20160526 13:23:15.650"></status>
+</kw>
+<msg timestamp="20160526 13:23:17.400" level="INFO">${result} = pull: building file list...
+pull: storage/emulated/0/DCIM/Camera/IMG_19700107_023846.jpg -&gt; CameraTest/IMG_19700107_023846.jpg
+1 file pulled. 0 files skipped.
+2607 KB/s (3962179 bytes in 1.483s)
+</msg>
+<status status="PASS" endtime="20160526 13:23:17.400" starttime="20160526 13:23:15.649"></status>
+</kw>
+<kw name="Should Not Be Empty" library="BuiltIn">
+<doc>Verifies that the given item is not empty.</doc>
+<arguments>
+<arg>${result}</arg>
+</arguments>
+<msg timestamp="20160526 13:23:17.400" level="INFO">Length is 199</msg>
+<status status="PASS" endtime="20160526 13:23:17.400" starttime="20160526 13:23:17.400"></status>
+</kw>
+<kw name="Execute Adb Shell Command" library="Mobile">
+<doc>Execute adb shell *cmd*</doc>
+<arguments>
+<arg>rm storage/emulated/0/DCIM/Camera/*.jpg</arg>
+</arguments>
+<status status="PASS" endtime="20160526 13:23:17.641" starttime="20160526 13:23:17.400"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:23:17.641" starttime="20160526 13:23:07.264"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:23:17.641" starttime="20160526 13:23:07.248"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:23:17.641" starttime="20160526 13:23:07.248"></status>
+</kw>
+<status status="PASS" endtime="20160526 13:23:17.641" critical="yes" starttime="20160526 13:23:07.248"></status>
+</test>
+<status status="FAIL" endtime="20160526 13:23:17.657" starttime="20160526 13:21:29.342"></status>
+</suite>
+<status status="FAIL" endtime="20160526 13:23:17.657" starttime="20160526 13:21:29.303"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="2" pass="5">Critical Tests</stat>
+<stat fail="2" pass="5">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="2" id="s1" name="Tests" pass="5">Tests</stat>
+<stat fail="2" id="s1-s1" name="ADB Test" pass="5">Tests.ADB Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
