@@ -12,6 +12,10 @@ namespace RobotToDashboard
         public string TestTitle { get; set; }
         public string Result { get; set; }
 
+        public TestResult()
+        {
+            
+        }
         public TestResult(int id, string title, string result)
         {
             TestId = id;
