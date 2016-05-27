@@ -55,8 +55,9 @@ namespace RobotToDashboard
             }
             Console.Write(output.ToString());
             WriteToHtml(results);
-            Console.WriteLine("Press enter to exit");
-            Console.Read();
+            Console.WriteLine("Press any key to exit");
+            Console.ReadKey();
+            System.Diagnostics.Process.Start("output.html");
         }
 
         private void ParseRobotXml()
@@ -69,11 +70,17 @@ namespace RobotToDashboard
             StringWriter stringWriter = new StringWriter();
             HtmlTextWriter writer = new HtmlTextWriter(stringWriter);
 
+            writer.RenderBeginTag("h2");
+            writer.Write("Test Results");
+            writer.RenderEndTag();
+
             writer.RenderBeginTag("ol");
             foreach (var result in testResults)
             {
                 writer.RenderBeginTag("li");
-                writer.Write("{0} Name: {1} Result: {2} ",result.TestId,result.TestTitle,result.Result);
+                writer.Write("{0} {1} ",result.TestId,result.TestTitle);
+                writer.WriteBreak();
+                writer.Write("&nbsp &nbsp &nbsp Result: {0}", result.Result);
                 writer.RenderEndTag();
             }
             writer.RenderEndTag();
