@@ -8,7 +8,7 @@ using System.IO;
 
 namespace RobotToDashboard
 {
-    class Parser
+    public class Parser
     {
         //Parses XML to C# class
         public Parser()
@@ -16,30 +16,27 @@ namespace RobotToDashboard
             StringBuilder output = new StringBuilder();
 
             //XML Parsing example
-            const string xmlString =
-                   @"<bookstore>
-                        <book genre='autobiography' publicationdate='1981-03-22' ISBN='1-861003-11-0'>
-                            <title>The Autobiography of Benjamin Franklin</title>
-                            <author>
-                                <first-name>Benjamin</first-name>
-                                <last-name>Franklin</last-name>
-                            </author>
-                            <price>8.99</price>
-                        </book>
-                    </bookstore>";
+            string xmlString = System.IO.File.ReadAllText("output.xml");
             using (XmlReader reader = XmlReader.Create(new StringReader(xmlString)))
             {
-                XmlWriterSettings ws = new XmlWriterSettings();
-                ws.Indent = true;
-                reader.ReadToFollowing("book");
+                reader.ReadToFollowing("robot");
                 reader.MoveToFirstAttribute();
-                string genre = reader.Value;
-                output.AppendLine("The genre value: " + genre);
+                string dateTime = reader.Value;
+                output.AppendLine("Tests performed at: " + dateTime);
 
-                reader.ReadToFollowing("title");
-                output.AppendLine("Content of the title element: " + reader.ReadElementContentAsString());
-                reader.ReadToFollowing("price");
-                output.AppendLine("Price of the book: " + reader.ReadElementContentAsString());
+                reader.ReadToFollowing("test");
+                output.AppendLine("Test name: " + reader.GetAttribute("name"));
+                string critical = "no";
+                string passFail = "FAIL";
+                while (critical != "yes")
+                {
+                    reader.ReadToFollowing("status");
+                    critical = reader.GetAttribute("critical");
+                }
+                passFail = reader.GetAttribute("status");
+                output.AppendLine("Test status: " + passFail);
+                //reader.ReadToFollowing("price");
+                //output.AppendLine("Price of the book: " + reader.ReadElementContentAsString());
             }
             Console.Write(output.ToString());
             Console.Read();

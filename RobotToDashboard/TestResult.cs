@@ -8,13 +8,13 @@ namespace RobotToDashboard
 {
     public class TestResult
     {
-        public int testId { get; set; }
+        public int TestId { get; set; }
         public string TestTitle { get; set; }
         public string Result { get; set; }
 
         public TestResult(int id, string title, string result)
         {
-            testId = id;
+            TestId = id;
             TestTitle = title;
             Result = result;
         }
