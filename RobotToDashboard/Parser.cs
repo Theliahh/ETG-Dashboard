@@ -17,7 +17,7 @@ namespace RobotToDashboard
             StringBuilder output = new StringBuilder();
             List<TestResult> results = new List<TestResult>();
             int testCount = 0;
-            //XML Parsing example
+            
             string xmlString = System.IO.File.ReadAllText("output.xml");
             using (XmlReader reader = XmlReader.Create(new StringReader(xmlString)))
             {
@@ -55,8 +55,8 @@ namespace RobotToDashboard
             }
             Console.Write(output.ToString());
             WriteToHtml(results);
-            Console.WriteLine("Press any key to exit");
-            Console.ReadKey();
+            //Console.WriteLine("Press any key to exit");
+            //Console.ReadKey();
             System.Diagnostics.Process.Start("output.html");
         }
 
@@ -73,16 +73,21 @@ namespace RobotToDashboard
             writer.RenderBeginTag("h2");
             writer.Write("Test Results");
             writer.RenderEndTag();
-
+            writer.WriteLine();
             writer.RenderBeginTag("ol");
+            writer.Indent++;
             foreach (var result in testResults)
             {
                 writer.RenderBeginTag("li");
-                writer.Write("{0} {1} ",result.TestId,result.TestTitle);
+                writer.Write($"{result.TestId} {result.TestTitle} ");
                 writer.WriteBreak();
-                writer.Write("&nbsp &nbsp &nbsp Result: {0}", result.Result);
+                
+                writer.Write($"&nbsp &nbsp &nbsp Result: {result.Result}");
                 writer.RenderEndTag();
+                writer.WriteLine();
+
             }
+            writer.Indent--;
             writer.RenderEndTag();
 
             File.WriteAllText("output.html", stringWriter.ToString());
