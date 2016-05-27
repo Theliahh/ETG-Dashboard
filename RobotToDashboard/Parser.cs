@@ -54,7 +54,7 @@ namespace RobotToDashboard
                 }
             }
             Console.Write(output.ToString());
-            WriteToHtml(results);
+            DashboardWriter newDash = new DashboardWriter(results);
             //Console.WriteLine("Press any key to exit");
             //Console.ReadKey();
             System.Diagnostics.Process.Start("output.html");
@@ -65,33 +65,5 @@ namespace RobotToDashboard
 
         }
 
-        private void WriteToHtml(List<TestResult> testResults)
-        {
-            StringWriter stringWriter = new StringWriter();
-            HtmlTextWriter writer = new HtmlTextWriter(stringWriter);
-
-            writer.RenderBeginTag("h2");
-            writer.Write("Test Results");
-            writer.RenderEndTag();
-            writer.WriteLine();
-            writer.RenderBeginTag("ol");
-            writer.Indent++;
-            foreach (var result in testResults)
-            {
-                writer.RenderBeginTag("li");
-                writer.Write($"{result.TestId} {result.TestTitle} ");
-                writer.WriteBreak();
-                
-                writer.Write($"&nbsp &nbsp &nbsp Result: {result.Result}");
-                writer.RenderEndTag();
-                writer.WriteLine();
-
-            }
-            writer.Indent--;
-            writer.RenderEndTag();
-
-            File.WriteAllText("output.html", stringWriter.ToString());
-            Console.WriteLine("HTML Output written to output.html");
-        }
     }
 }
