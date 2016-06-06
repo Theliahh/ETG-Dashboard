@@ -96,7 +96,7 @@ namespace RobotToDashboard
 
         private void AddStyles(HtmlTextWriter writer)
         {
-            string css = File.ReadAllText("C:\\Users\\VMDW73\\Documents\\Visual Studio 2015\\Projects\\RobotToDashboard\\RobotToDashboard\\style.css");
+            string css = File.ReadAllText("style.css");
 
             writer.Write("<link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7' crossorigin='anonymous'>");
             writer.RenderBeginTag("style");
