@@ -1,0 +1,8 @@
+﻿
+.failed-test {
+    background-color: #db0009 ;
+}
+
+.passed-test {
+    background-color: #1bd640;
+}

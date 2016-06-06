@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace RobotToDashboard
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             //creates a parser and runs it
             Parser xmlParser = new Parser();
-            
+            xmlParser.ParseXmlFile(args.Length > 0 ? args[0] : "output.xml");
         }
     }
 }

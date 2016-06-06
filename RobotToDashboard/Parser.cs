@@ -14,14 +14,20 @@ namespace RobotToDashboard
         //Parses XML to C# class
         public Parser()
         {
+
+
+        }
+
+        public void ParseXmlFile(string resultsXml)
+        {
             StringBuilder output = new StringBuilder();
             List<TestResult> results = new List<TestResult>();
             int testCount = 0;
-            
-            string xmlString = System.IO.File.ReadAllText("output.xml");
+
+            string xmlString = System.IO.File.ReadAllText(resultsXml);
             using (XmlReader reader = XmlReader.Create(new StringReader(xmlString)))
             {
-                
+
                 reader.ReadToFollowing("robot");
                 reader.MoveToFirstAttribute();
                 string dateTime = reader.Value;
@@ -32,8 +38,8 @@ namespace RobotToDashboard
                     testCount++;
                     reader.ReadToFollowing("test");
                     string testName = reader.GetAttribute("name");
-                    if(testName != null)
-                        output.AppendLine("Test name: " + testName);                     
+                    if (testName != null)
+                        output.AppendLine("Test name: " + testName);
                     string passFail = "FAIL";
                     reader.ReadToFollowing("status");
                     if (reader.Name == "status")
@@ -47,10 +53,10 @@ namespace RobotToDashboard
                     if (passFail != null)
                     {
                         output.AppendLine("Test status: " + passFail);
-                        TestResult newResult = new TestResult(testCount,testName,passFail);
+                        TestResult newResult = new TestResult(testCount, testName, passFail);
                         results.Add(newResult);
                     }
-                        
+
                 }
             }
             Console.Write(output.ToString());
@@ -58,11 +64,6 @@ namespace RobotToDashboard
             //Console.WriteLine("Press any key to exit");
             //Console.ReadKey();
             System.Diagnostics.Process.Start("output.html");
-        }
-
-        private void ParseRobotXml()
-        {
-
         }
 
     }
