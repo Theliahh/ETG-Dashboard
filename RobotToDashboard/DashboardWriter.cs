@@ -21,6 +21,7 @@ namespace RobotToDashboard
         {   
             StringWriter stringWriter = new StringWriter();
             HtmlTextWriter writer = new HtmlTextWriter(stringWriter);
+            float passRate = 0;
 
             AddHead(writer);
 
@@ -29,6 +30,18 @@ namespace RobotToDashboard
             writer.RenderBeginTag("div");
             writer.RenderBeginTag("h2");
             writer.Write("Test Results");
+            writer.RenderEndTag();
+
+            foreach (var result in _testResults)
+            {
+                if (result.Result == "PASS")
+                {
+                    passRate++;
+                }
+            }
+            passRate = passRate/_testResults.ToList().Count;
+            writer.RenderBeginTag("h3");
+            writer.WriteLine($@"Pass Rate: {passRate*100:0.00}%");
             writer.RenderEndTag();
 
             writer.WriteLine();
@@ -77,7 +90,7 @@ namespace RobotToDashboard
             Console.WriteLine("HTML Output written to output.html");
         }
 
-        private void AddHead(HtmlTextWriter writer)
+        private static void AddHead(HtmlTextWriter writer)
         {
 
             //Will change this later
@@ -88,15 +101,15 @@ namespace RobotToDashboard
             writer.RenderEndTag();
         }
 
-        private void AddScripts(HtmlTextWriter writer)
+        private static void AddScripts(HtmlTextWriter writer)
         {
             //writer.Write("<script src='https://code.jquery.com/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous'></script>");
             //writer.Write("<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js' integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS' crossorigin='anonymous'></script>");
         }
 
-        private void AddStyles(HtmlTextWriter writer)
+        private static void AddStyles(HtmlTextWriter writer)
         {
-            string css = File.ReadAllText("style.css");
+            string css = File.ReadAllText("../../style.css");
 
             writer.Write("<link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7' crossorigin='anonymous'>");
             writer.RenderBeginTag("style");

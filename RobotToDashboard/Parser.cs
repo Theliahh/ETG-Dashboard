@@ -23,7 +23,7 @@ namespace RobotToDashboard
             StringBuilder output = new StringBuilder();
             List<TestResult> results = new List<TestResult>();
             int testCount = 0;
-
+            
             string xmlString = System.IO.File.ReadAllText(resultsXml);
             using (XmlReader reader = XmlReader.Create(new StringReader(xmlString)))
             {
