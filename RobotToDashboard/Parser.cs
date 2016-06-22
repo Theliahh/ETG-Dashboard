@@ -23,6 +23,11 @@ namespace RobotToDashboard
             StringBuilder output = new StringBuilder();
             List<TestResult> results = new List<TestResult>();
             int testCount = 0;
+
+            const string statusTag = "status"; //<status>
+
+            DateTime thisDay = DateTime.Today;
+            Console.WriteLine("Date of tests: "+thisDay.ToString("d"));
             
             string xmlString = System.IO.File.ReadAllText(resultsXml);
             using (XmlReader reader = XmlReader.Create(new StringReader(xmlString)))
@@ -41,15 +46,15 @@ namespace RobotToDashboard
                     if (testName != null)
                         output.AppendLine("Test name: " + testName);
                     string passFail = "FAIL";
-                    reader.ReadToFollowing("status");
-                    if (reader.Name == "status")
+                    reader.ReadToFollowing(statusTag);
+                    if (reader.Name == statusTag)
                         while (critical != "yes")
                         {
-                            reader.ReadToFollowing("status");
+                            reader.ReadToFollowing(statusTag);
                             critical = reader.GetAttribute("critical");
                         }
                     critical = "no";
-                    passFail = reader.GetAttribute("status");
+                    passFail = reader.GetAttribute(statusTag);
                     if (passFail != null)
                     {
                         output.AppendLine("Test status: " + passFail);
@@ -63,7 +68,7 @@ namespace RobotToDashboard
             DashboardWriter newDash = new DashboardWriter(results);
             //Console.WriteLine("Press any key to exit");
             //Console.ReadKey();
-            System.Diagnostics.Process.Start("output.html");
+            System.Diagnostics.Process.Start("day0.html");
         }
 
     }

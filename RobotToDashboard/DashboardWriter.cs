@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.UI;
 
 namespace RobotToDashboard
@@ -22,15 +20,11 @@ namespace RobotToDashboard
             StringWriter stringWriter = new StringWriter();
             HtmlTextWriter writer = new HtmlTextWriter(stringWriter);
             float passRate = 0;
+            DateTime thisDay = DateTime.Today;
 
             AddHead(writer);
 
-            writer.RenderBeginTag("body");
-            writer.AddAttribute("class", "container");
             writer.RenderBeginTag("div");
-            writer.RenderBeginTag("h2");
-            writer.Write("Test Results");
-            writer.RenderEndTag();
 
             foreach (var result in _testResults)
             {
@@ -42,6 +36,10 @@ namespace RobotToDashboard
             passRate = passRate/_testResults.ToList().Count;
             writer.RenderBeginTag("h3");
             writer.WriteLine($@"Pass Rate: {passRate*100:0.00}%");
+            writer.RenderEndTag();
+
+            writer.RenderBeginTag("h4");
+            writer.WriteLine($@"Test Date: {thisDay.ToString("d")}");
             writer.RenderEndTag();
 
             writer.WriteLine();
@@ -59,6 +57,7 @@ namespace RobotToDashboard
             writer.RenderEndTag();
             writer.RenderBeginTag("th");
             writer.Write("Test Result");
+            writer.RenderEndTag();
             writer.RenderEndTag();
             writer.RenderEndTag();
             writer.Indent--;
@@ -86,8 +85,30 @@ namespace RobotToDashboard
             writer.RenderEndTag();
             writer.RenderEndTag();
             writer.RenderEndTag();
-            File.WriteAllText("output.html", stringWriter.ToString());
-            Console.WriteLine("HTML Output written to output.html");
+            try
+            {
+                File.Delete("day4.html to make room for new one");
+                Console.WriteLine("day4.html deleted");
+                for (int i = 0; i < 4; i++)
+                {
+                    File.Copy($"day{i}.html", $"day{i + 1}.html", true);
+                    Console.WriteLine($"day{i}.html renamed to day{i + 1}.html");
+                }
+
+
+            }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine(e);
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine(e);
+            }
+            File.WriteAllText("day0.html", stringWriter.ToString());
+            Console.WriteLine("HTML Output written to day0.html");
+
+            
         }
 
         private static void AddHead(HtmlTextWriter writer)
@@ -101,6 +122,7 @@ namespace RobotToDashboard
             writer.RenderEndTag();
         }
 
+        // ReSharper disable once UnusedParameter.Local
         private static void AddScripts(HtmlTextWriter writer)
         {
             //writer.Write("<script src='https://code.jquery.com/jquery-2.2.4.min.js' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=' crossorigin='anonymous'></script>");
@@ -111,7 +133,7 @@ namespace RobotToDashboard
         {
             string css = File.ReadAllText("../../style.css");
 
-            writer.Write("<link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7' crossorigin='anonymous'>");
+            //writer.Write("<link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7' crossorigin='anonymous'>");
             writer.RenderBeginTag("style");
             writer.Write(css);
             writer.RenderEndTag();
